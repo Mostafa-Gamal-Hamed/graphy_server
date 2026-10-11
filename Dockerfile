@@ -1,9 +1,9 @@
-FROM node:22.9.0-alpine3.19
+FROM node:22-alpine
+WORKDIR /app
+COPY package.json ./
+RUN npm install
 COPY graphserver.js .
-COPY package.json .
 COPY UScities.json .
-RUN npm install &&\
-    apk update &&\
-    apk upgrade
-EXPOSE  4000
-CMD node graphserver.js
+RUN apk update && apk upgrade --no-cache
+EXPOSE 4000
+CMD ["node", "graphserver.js"]
